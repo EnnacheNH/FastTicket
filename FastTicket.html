@@ -8,7 +8,7 @@
 </head>
 
 <body class="flex">
-    <div>
+    <div class="fast-ticket">
         <div class="wrapper ticket" id="ticketTarget">
             <div class="row separated-y-wrapper">
                 <div class="col separated part ticket-part">Ticket</div>
@@ -16,15 +16,22 @@
                 <div class="col separated part grafana-part">Grafana</div>
             </div>
         </div>
+        <button onclick="resetAll()">Reset</button>
     </div>
 
 </body>
 
 <script>
-    function openUrl(url) {
+    const openUrl = (url) => {
         if (url) {
             window.open(url, "_blank");
         }
+    }
+
+    const resetAll = () => {
+        document.querySelectorAll("input").forEach((input) => {
+            input.value = "";
+        })
     }
 
     // Ticket
@@ -198,27 +205,35 @@
         }
     }
 
-    .ticket {
-        .part {
-            justify-content: space-evenly;
-            padding: 10px;
+    .fast-ticket {
+        gap: 20px;
+
+        >button {
+            width: 5rem;
         }
 
-        .ticket-part {
-            width: 16rem;
-        }
+        .ticket {
+            .part {
+                justify-content: space-evenly;
+                padding: 10px;
+            }
 
-        .board-part {
-            width: 20rem;
-        }
+            .ticket-part {
+                width: 16rem;
+            }
 
-        .grafana-part {
-            width: 15rem;
-        }
+            .board-part {
+                width: 20rem;
+            }
 
-        .project {
-            width: 2rem;
-            font-weight: bold;
+            .grafana-part {
+                width: 15rem;
+            }
+
+            .project {
+                width: 2rem;
+                font-weight: bold;
+            }
         }
     }
 </style>
