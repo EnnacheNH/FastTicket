@@ -111,7 +111,7 @@
         </div>
     `;
 
-    const getHtmlTicket = (projectName, props) => `
+    const getHtmlFastTicket = (projectName, props) => `
         <div class="row separated-y-wrapper">
             <div class="col separated part ticket-part">
                 <div class="project">${projectName}</div>
@@ -135,7 +135,7 @@
             html += `
                 <div class="col">
                     <button onclick="openUrl('https://ccv-wcv-grafana-outscale.${
-                        env === 'version' | env === 'dev' ? 'test' : env
+                        env === 'version' || env === 'dev' ? 'test' : env
                     }.internal.dpdgroup.com/d/${grafana[env]}')">${env.toUpperCase()}</button>
                 </div>
             `;
@@ -166,7 +166,7 @@
         }
 
 
-        ticketTarget.innerHTML += getHtmlTicket(key, properties);
+        ticketTarget.innerHTML += getHtmlFastTicket(key, properties);
     }
 </script>
 
