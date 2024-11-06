@@ -141,13 +141,21 @@
         const properties = ticketDict[key];
         const baseUrl = `https://gitlab.com/solutec-cds-dev-projet/ccv/${properties.projectName}/-/`;
         properties.ticket["openTicket"] = () => {
-            openUrl(`${baseUrl}issues/${document.getElementById(properties.ticket.inputId).value}`);
+            const value = document.getElementById(properties.ticket.inputId).value;
+            if (!value) {
+                return;
+            }
+            openUrl(`${baseUrl}issues/${value}`);
         }
         properties.board["openBoard"] = () => {
             openUrl(`${baseUrl}boards`);
         }
         properties.board["openVersion"] = () => {
-            openUrl(`${baseUrl}boards?milestone_title=Version ${document.getElementById(properties.board.inputVersionId).value}`);
+            const value = document.getElementById(properties.board.inputVersionId).value;
+            if (!value) {
+                return;
+            }
+            openUrl(`${baseUrl}boards?milestone_title=Version ${value}`);
         }
 
 
