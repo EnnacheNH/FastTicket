@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fast Ticket</title>
+</head>
+
+<body class="flex">
+    <div>
+        <div class="wrapper ticket" id="ticketTarget">
+            <div class="row separated-y-wrapper">
+                <div class="col separated part ticket-part">Ticket</div>
+                <div class="col separated part board-part">Board</div>
+                <div class="col separated part grafana-part">Grafana</div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    function openUrl(url) {
+        if (url) {
+            window.open(url, "_blank");
+        }
+    }
+
+    // Ticket
+    const ticketDict = {
+        C30: {
+            projectName: "ccv-p30",
+            ticket: {
+                inputId: "inputTicketC30",
+            },
+            board: {
+                inputVersionId: "inputBoardVersionC30",
+            },
+            grafana: {
+                prod: "abjJtwytrbds/logs-v2-prod",
+                preprod: "abjJtwytrbds/logs-v2-preprod",
+                version: "abjJtwytrbds/logs-v2-test?var-service_name=c30-test-backend&var-searchable_pattern=error",
+                dev: "absdjJtwytrbds/logs-v2-dev?var-service_name=c30-test-backend&var-searchable_pattern=error",
+            }
+        },
+        X30: {
+            projectName: "ccv-x30",
+            ticket: {
+                inputId: "inputTicketX30",
+            },
+            board: {
+                inputVersionId: "inputBoardVersionX30",
+            },
+            grafana: {
+                prod: "abjJtwbds/logs-v2-prod",
+                preprod: "abjJtwbds/logs-v2-preprod",
+                version: "abjJtwbds/logs-v2-test",
+                dev: "abjJtwbdk/logs-v2-dev",
+            }
+        },
+        FCC: {
+            projectName: "CCVOutilPrefacturation",
+            ticket: {
+                inputId: "inputTicketFCC",
+            },
+            board: {
+                inputVersionId: "inputBoardVersionFCC",
+            },
+            grafana: {
+                prod: "KoCKtQxSzAZ/logs-v2-prod",
+                preprod: "KoCKtQxSzAZ/logs-v2-preprod",
+                version: "KoCKtQxSzAZ/logs-v2-test",
+                dev: "KoCKtQxSzAA/logs-v2-dev",
+            }
+        },
+        MCC: {
+            projectName: "ccv-mobility-middleware",
+            ticket: {
+                inputId: "inputTicketMCC",
+            },
+            board: {
+                inputVersionId: "inputBoardVersionMCC",
+            },
+            grafana: {
+                prod: "KoCKtQxSzAB/logs-v2-prod",
+                preprod: "KoCKtQxSzAB/logs-v2-preprod",
+                version: "KoCKtQxSzAB/logs-v2-test",
+                dev: "KoCKtQxSzA/logs-v2-dev",
+            }
+        }
+    }
+
+    function onEnter(e, openTicket) {
+        if (e.keyCode == 13) {
+            openTicket();
+        }
+    }
+
+    const getHtmlInput = (inputId, placeholder, open) => `
+        <div>
+            <input type="text" id="${inputId}" placeholder="${placeholder}" onkeydown="onEnter(event, ${open})">
+            <button onclick="${open}()">Go !</button>
+        </div>
+    `;
+
+    const getHtmlTicket = (projectName, props) => `
+        <div class="row separated-y-wrapper">
+            <div class="col separated part ticket-part">
+                <div class="project">${projectName}</div>
+                ${getHtmlInput(props.ticket.inputId, "Numéro de ticket", `ticketDict.${projectName}.ticket.openTicket`)}
+            </div>
+            <div class="col separated part board-part">
+                <div>
+                    <button onclick="ticketDict.${projectName}.board.openBoard()">Board</button>
+                </div>
+                ${getHtmlInput(props.board.inputVersionId, "Numéro de version", `ticketDict.${projectName}.board.openVersion`)}
+            </div>
+            <div class="col separated part grafana-part">
+                ${getHtmlGrafana(props.grafana)}
+            </div>
+        </div>
+    `;
+
+    const getHtmlGrafana = (grafana) => {
+        let html = '';
+        for (const env in grafana) {
+            html += `
+                <div class="col">
+                    <button onclick="openUrl('https://ccv-wcv-grafana-outscale.${
+                        env === 'version' | env === 'dev' ? 'test' : env
+                    }.internal.dpdgroup.com/d/${grafana[env]}')">${env.toUpperCase()}</button>
+                </div>
+            `;
+        }
+        return html;
+    };
+
+    const ticketTarget = document.getElementById("ticketTarget");
+    for (const key in ticketDict) {
+        const properties = ticketDict[key];
+        const baseUrl = `https://gitlab.com/solutec-cds-dev-projet/ccv/${properties.projectName}/-/`;
+        properties.ticket["openTicket"] = () => {
+            openUrl(`${baseUrl}issues/${document.getElementById(properties.ticket.inputId).value}`);
+        }
+        properties.board["openBoard"] = () => {
+            openUrl(`${baseUrl}boards`);
+        }
+        properties.board["openVersion"] = () => {
+            openUrl(`${baseUrl}boards?milestone_title=Version ${document.getElementById(properties.board.inputVersionId).value}`);
+        }
+
+
+        ticketTarget.innerHTML += getHtmlTicket(key, properties);
+    }
+</script>
+
+<style>
+    body {
+        flex-direction: column;
+        align-items: center;
+        margin: 100px;
+    }
+
+    .flex,
+    div {
+        display: flex;
+    }
+
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    .col {
+        display: flex;
+    }
+
+    .separated-y-wrapper {
+        >.separated {
+            border-right: 1px solid;
+        }
+
+        :first-child.separated {
+            border-left: 1px solid;
+
+        }
+    }
+
+    .ticket {
+        .part {
+            justify-content: space-evenly;
+            padding: 10px;
+        }
+
+        .ticket-part {
+            width: 16rem;
+        }
+
+        .board-part {
+            width: 20rem;
+        }
+
+        .grafana-part {
+            width: 15rem;
+        }
+
+        .project {
+            width: 2rem;
+            font-weight: bold;
+        }
+    }
+</style>
+
+</html>
