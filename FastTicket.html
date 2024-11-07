@@ -12,7 +12,6 @@
         <div class="wrapper" id="fastTicketTarget">
             <div class="row separated-y-wrapper">
                 <div class="col separated part ticket-part">Ticket</div>
-                <div class="col separated part board-part">Board</div>
                 <div class="col separated part grafana-part">Grafana</div>
                 <div class="col separated part environment-part">Environnement</div>
             </div>
@@ -53,9 +52,6 @@
             ticket: {
                 inputId: "inputTicketC30",
             },
-            board: {
-                inputVersionId: "inputBoardVersionC30",
-            },
             grafana: {
                 prod: "abjJtwytrbds/logs-v2-prod",
                 preprod: "abjJtwytrbds/logs-v2-preprod",
@@ -73,9 +69,6 @@
             projectName: "ccv-x30",
             ticket: {
                 inputId: "inputTicketX30",
-            },
-            board: {
-                inputVersionId: "inputBoardVersionX30",
             },
             grafana: {
                 prod: "abjJtwbds/logs-v2-prod",
@@ -95,9 +88,6 @@
             ticket: {
                 inputId: "inputTicketFCC",
             },
-            board: {
-                inputVersionId: "inputBoardVersionFCC",
-            },
             grafana: {
                 prod: "KoCKtQxSzAZ/logs-v2-prod",
                 preprod: "KoCKtQxSzAZ/logs-v2-preprod",
@@ -115,9 +105,6 @@
             projectName: "ccv-mobility-middleware",
             ticket: {
                 inputId: "inputTicketMCC",
-            },
-            board: {
-                inputVersionId: "inputBoardVersionMCC",
             },
             grafana: {
                 prod: "KoCKtQxSzAB/logs-v2-prod",
@@ -146,12 +133,9 @@
             <div class="col separated part ticket-part">
                 <div class="project">${projectName}</div>
                 ${getHtmlInput(props.ticket.inputId, "Numéro de ticket", `ticketDict.${projectName}.ticket.openTicket`)}
-            </div>
-            <div class="col separated part board-part">
                 <div>
-                    <button onclick="ticketDict.${projectName}.board.openBoard()">Board</button>
+                    <button onclick="ticketDict.${projectName}.ticket.openBoard()">Board</button>
                 </div>
-                ${getHtmlInput(props.board.inputVersionId, "Numéro de version", `ticketDict.${projectName}.board.openVersion`)}
             </div>
             <div class="col separated part grafana-part">
                 ${getHtmlGrafana(props.grafana)}
@@ -207,17 +191,9 @@
             }
             openUrl(`${baseUrl}issues/${value}`);
         }
-        properties.board["openBoard"] = () => {
+        properties.ticket["openBoard"] = () => {
             openUrl(`${baseUrl}boards`);
         }
-        properties.board["openVersion"] = () => {
-            const value = document.getElementById(properties.board.inputVersionId).value;
-            if (!value) {
-                return;
-            }
-            openUrl(`${baseUrl}boards?milestone_title=Version ${value}`);
-        }
-
 
         fastTicketTarget.innerHTML += getHtmlFastTicket(key, properties);
     }
@@ -272,11 +248,7 @@
             }
 
             .ticket-part {
-                width: 300px;
-            }
-
-            .board-part {
-                width: 300px;
+                width: 380px;
             }
 
             .grafana-part {
