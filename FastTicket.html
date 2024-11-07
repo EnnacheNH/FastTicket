@@ -14,6 +14,7 @@
                 <div class="col separated part ticket-part">Ticket</div>
                 <div class="col separated part board-part">Board</div>
                 <div class="col separated part grafana-part">Grafana</div>
+                <div class="col separated part environment-part">Environnement</div>
             </div>
         </div>
         <button onclick="resetAll()">Reset</button>
@@ -49,7 +50,13 @@
                 preprod: "abjJtwytrbds/logs-v2-preprod",
                 version: "abjJtwytrbds/logs-v2-test?var-service_name=c30-test-backend&var-searchable_pattern=error",
                 dev: "absdjJtwytrbds/logs-v2-dev?var-service_name=c30-test-backend&var-searchable_pattern=error",
-            }
+            },
+            environment: {
+                prod: "https://c30.cchezvous.fr",
+                preprod: "https://c30.staging.cchezvous.fr",
+                version: "https://c30-test.staging.cchezvous.fr",
+                dev: "https://c30-dev.staging.cchezvous.fr",
+            },
         },
         X30: {
             projectName: "ccv-x30",
@@ -64,7 +71,13 @@
                 preprod: "abjJtwbds/logs-v2-preprod",
                 version: "abjJtwbds/logs-v2-test",
                 dev: "abjJtwbdk/logs-v2-dev",
-            }
+            },
+            environment: {
+                prod: "https://csuivi.cchezvous.fr",
+                preprod: "https://csuivi.staging.cchezvous.fr",
+                version: "https://csuivi-test.staging.cchezvous.fr",
+                dev: "https://csuivi-dev.staging.cchezvous.fr",
+            },
         },
         FCC: {
             projectName: "CCVOutilPrefacturation",
@@ -79,7 +92,13 @@
                 preprod: "KoCKtQxSzAZ/logs-v2-preprod",
                 version: "KoCKtQxSzAZ/logs-v2-test",
                 dev: "KoCKtQxSzAA/logs-v2-dev",
-            }
+            },
+            environment: {
+                prod: "https://cregle.cchezvous.fr/version",
+                preprod: "https://cregle.staging.cchezvous.fr/version",
+                version: "https://cregle-test.staging.cchezvous.fr/version",
+                dev: "https://cregle-dev.staging.cchezvous.fr/dev",
+            },
         },
         MCC: {
             projectName: "ccv-mobility-middleware",
@@ -94,7 +113,7 @@
                 preprod: "KoCKtQxSzAB/logs-v2-preprod",
                 version: "KoCKtQxSzAB/logs-v2-test",
                 dev: "KoCKtQxSzA/logs-v2-dev",
-            }
+            },
         }
     }
 
@@ -126,6 +145,9 @@
             <div class="col separated part grafana-part">
                 ${getHtmlGrafana(props.grafana)}
             </div>
+            <div class="col separated part environment-part">
+                ${getEnvironmentHtml(props.environment)}
+            </div>
         </div>
     `;
 
@@ -143,10 +165,31 @@
         return html;
     };
 
+    const getEnvironmentHtml = (environnement) => {
+        if (!environnement) {
+            return '';
+        }
+
+        let html = '';
+        for (const key in environnement) {
+            const url = environnement[key];
+            if (!url) {
+                continue;
+            }
+            html += `
+                <div class="col">
+                    <button onclick="openUrl('${environnement[key]}')">${key.toUpperCase()}</button>
+                </div>
+            `;
+        }
+        return html;
+    }
+
     const ticketTarget = document.getElementById("ticketTarget");
     for (const key in ticketDict) {
         const properties = ticketDict[key];
         const baseUrl = `https://gitlab.com/solutec-cds-dev-projet/ccv/${properties.projectName}/-/`;
+        // https://gitlab.com/groups/solutec-cds-dev-projet/ccv/-/wikis/FCC/ID
         properties.ticket["openTicket"] = () => {
             const value = document.getElementById(properties.ticket.inputId).value;
             if (!value) {
@@ -209,7 +252,7 @@
         gap: 20px;
 
         >button {
-            width: 5rem;
+            width: 80px;
         }
 
         .ticket {
@@ -219,19 +262,23 @@
             }
 
             .ticket-part {
-                width: 16rem;
+                width: 300px;
             }
 
             .board-part {
-                width: 20rem;
+                width: 300px;
             }
 
             .grafana-part {
-                width: 15rem;
+                width: 300px;
+            }
+
+            .environment-part {
+                width: 300px;
             }
 
             .project {
-                width: 2rem;
+                width: 20px;
                 font-weight: bold;
             }
         }
