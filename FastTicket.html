@@ -57,6 +57,10 @@
     const dataDict = {
         C30: {
             projectName: "ccv-p30",
+            board: {
+                ticket: {},
+                version: {}
+            },
             ticket: {
                 inputId: "inputTicketC30",
             },
@@ -75,6 +79,11 @@
         },
         X30: {
             projectName: "ccv-x30",
+            board: {
+                ticket: {},
+                version: {},
+                boardId : 2078254,
+            },
             ticket: {
                 inputId: "inputTicketX30",
             },
@@ -93,6 +102,10 @@
         },
         FCC: {
             projectName: "CCVOutilPrefacturation",
+            board: {
+                ticket: {},
+                version: {}
+            },
             ticket: {
                 inputId: "inputTicketFCC",
             },
@@ -111,6 +124,10 @@
         },
         MCC: {
             projectName: "ccv-mobility-middleware",
+            board: {
+                ticket: {},
+                version: {}
+            },
             ticket: {
                 inputId: "inputTicketMCC",
             },
@@ -123,6 +140,9 @@
         },
         EXPLOIT: {
             projectName: "ccv-exploitation",
+            board: {
+                ticket: {},
+            },
             ticket: {
                 inputId: "inputTicketExploit",
             },
@@ -145,11 +165,7 @@
     const getHtmlFastTicket = (projectName, props) => `
         <div class="row separated-y-wrapper">
             <div class="col separated part board-part">
-                <div class="project">${projectName}</div>
-                ${getHtmlInput(props.ticket.inputId, "Numéro de ticket", `dataDict.${projectName}.ticket.openTicket`)}
-                <div>
-                    <button onclick="dataDict.${projectName}.ticket.openBoard()">Board</button>
-                </div>
+                ${getHtmlBoard(projectName, props.board)}
             </div>
             <div class="col separated part grafana-part">
                 ${getHtmlGrafana(props.grafana)}
@@ -159,6 +175,23 @@
             </div>
         </div>
     `;
+
+    const getHtmlBoard = (projectName, board) => {
+        let html = `<div class="project">${projectName}</div>`;
+        for (const boardKey in board) {
+            const boardObject = board[boardKey];
+            if (typeof boardObject !== "object") {
+                continue;
+            }
+            html += getHtmlInput(boardObject.inputId, boardObject.placeholder,
+                `dataDict.${projectName}.board.${boardKey}.open`);
+        }
+        return `${html}
+                <div>
+                    <button onclick="dataDict.${projectName}.board.openBoard()">Board</button>
+                </div>
+        `;
+    }
 
     const getHtmlGrafana = (grafana) => {
         let html = '';
@@ -195,23 +228,62 @@
     }
 
     const fastTicketTarget = document.getElementById("fastTicketTarget");
-    for (const key in dataDict) {
-        const properties = dataDict[key];
-        const baseUrl = `https://gitlab.com/solutec-cds-dev-projet/ccv/${properties.projectName}/-/`;
-        properties.ticket["openTicket"] = () => {
-            const value = document.getElementById(properties.ticket.inputId).value;
+    for (const projectKey in dataDict) {
+        const projectObject = dataDict[projectKey];
+        const baseUrl = `https://gitlab.com/solutec-cds-dev-projet/ccv/${projectObject.projectName}/-/`;
+
+        projectObject.ticket["openTicket"] = () => {
+            const value = document.getElementById(projectObject.ticket.inputId).value;
             if (!value) {
                 return;
             }
             const url = `${baseUrl}issues/${value}`;
             openUrl(url);
-            addHistory(`${key} - ${value}`, url);
+            addHistory(`${projectKey} - ${value}`, url);
         }
-        properties.ticket["openBoard"] = () => {
+        projectObject.ticket["openBoard"] = () => {
             openUrl(`${baseUrl}boards`);
         }
 
-        fastTicketTarget.innerHTML += getHtmlFastTicket(key, properties);
+
+        for (const boardKey in projectObject.board) {
+            const boardObject = projectObject.board[boardKey];
+            const inputId = 'inputId' + boardKey + projectKey;
+            boardObject.inputId = inputId;
+
+            switch (boardKey) {
+                case 'ticket':
+                    boardObject.placeholder = 'Numéro de ticket';
+                    boardObject.open = () => {
+                        const value = document.getElementById(inputId).value;
+                        if (!value) {
+                            return;
+                        }
+                        const url = `${baseUrl}issues/${value}`;
+                        openUrl(url);
+                        addHistory(`${projectKey} - ${value}`, url);
+                    }
+                    break;
+                case 'version':
+                    boardObject.placeholder = 'Numéro de version';
+                    boardObject.open = () => {
+                        const value = document.getElementById(inputId).value;
+                        if (!value) {
+                            return;
+                        }
+                        const url = `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=Version ${value}`;
+                        openUrl(url);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        projectObject.board.openBoard = () => {
+            openUrl(`${baseUrl}boards/${projectObject.board.boardId ?? ''}`);
+        }
+
+        fastTicketTarget.innerHTML += getHtmlFastTicket(projectKey, projectObject);
     }
 
     // History
@@ -220,7 +292,12 @@
             if (!entry) {
                 return acc;
             }
-            const time = new Date(entry.time).toLocaleDateString("fr-FR", {day:"2-digit", month:"2-digit", hour:"2-digit", minute:"2-digit"});
+            const time = new Date(entry.time).toLocaleDateString("fr-FR", {
+                day: "2-digit",
+                month: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
             return acc + `
                 <button class="flex" style="justify-content: space-evenly;" onclick="openUrl('${entry.url}')">
                     <div>
@@ -298,7 +375,7 @@
             }
 
             .board-part {
-                width: 380px;
+                width: 600px;
             }
 
             .grafana-part {
