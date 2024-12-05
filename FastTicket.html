@@ -11,7 +11,7 @@
     <div class="fast-ticket">
         <div class="wrapper" id="fastTicketTarget">
             <div class="row separated-y-wrapper">
-                <div class="col separated part ticket-part">Ticket</div>
+                <div class="col separated part board-part">Board</div>
                 <div class="col separated part grafana-part">Grafana</div>
                 <div class="col separated part environment-part">Environnement</div>
             </div>
@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="history">
-            <div class="head">Historique</div>
+            <div class="head">Historique ticket</div>
             <div class="wrapper" id="historyTarget">
             </div>
         </div>
@@ -53,8 +53,8 @@
         })
     }
 
-    // Ticket
-    const ticketDict = {
+    // Shortcut
+    const dataDict = {
         C30: {
             projectName: "ccv-p30",
             ticket: {
@@ -117,7 +117,7 @@
             grafana: {
                 prod: "KoCKtQxSzAB/logs-v2-prod",
                 preprod: "KoCKtQxSzAB/logs-v2-preprod",
-                version: "KoCKtQxSzAB/logs-v2-test",
+                version: "KsoCKtQxSzA/logs-v2-test",
                 dev: "KoCKtQxSzA/logs-v2-dev",
             },
         },
@@ -144,11 +144,11 @@
 
     const getHtmlFastTicket = (projectName, props) => `
         <div class="row separated-y-wrapper">
-            <div class="col separated part ticket-part">
+            <div class="col separated part board-part">
                 <div class="project">${projectName}</div>
-                ${getHtmlInput(props.ticket.inputId, "Numéro de ticket", `ticketDict.${projectName}.ticket.openTicket`)}
+                ${getHtmlInput(props.ticket.inputId, "Numéro de ticket", `dataDict.${projectName}.ticket.openTicket`)}
                 <div>
-                    <button onclick="ticketDict.${projectName}.ticket.openBoard()">Board</button>
+                    <button onclick="dataDict.${projectName}.ticket.openBoard()">Board</button>
                 </div>
             </div>
             <div class="col separated part grafana-part">
@@ -195,8 +195,8 @@
     }
 
     const fastTicketTarget = document.getElementById("fastTicketTarget");
-    for (const key in ticketDict) {
-        const properties = ticketDict[key];
+    for (const key in dataDict) {
+        const properties = dataDict[key];
         const baseUrl = `https://gitlab.com/solutec-cds-dev-projet/ccv/${properties.projectName}/-/`;
         properties.ticket["openTicket"] = () => {
             const value = document.getElementById(properties.ticket.inputId).value;
@@ -297,7 +297,7 @@
                 padding: 10px;
             }
 
-            .ticket-part {
+            .board-part {
                 width: 380px;
             }
 
