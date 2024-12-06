@@ -142,7 +142,7 @@
             projectName: "ccv-exploitation",
             board: {
                 ticket: {},
-                version: {}
+                milestone: {}
             },
             ticket: {
                 inputId: "inputTicketExploit",
@@ -273,6 +273,17 @@
                             return;
                         }
                         const url = `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=Version ${value}`;
+                        openUrl(url);
+                    }
+                    break;
+                case 'milestone':
+                    boardObject.placeholder = 'Milestone';
+                    boardObject.open = () => {
+                        const value = document.getElementById(inputId).value;
+                        if (!value) {
+                            return;
+                        }
+                        const url = `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=${value}`;
                         openUrl(url);
                     }
                     break;
