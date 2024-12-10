@@ -21,7 +21,23 @@
     <div class="bottom">
         <div class="custom-shorcut">
             <div class="wrapper" id="customShortcut">
-                A venir...
+                <div class="input">
+                    <input type="text" placeholder="Nom">
+                    <input type="text" placeholder="URL">
+                    <button>Ajouter</button>
+                </div>
+                <div class="flex grid">
+                    <div class="card wrapper">
+                        <div class="header">
+                        <div>X</div>
+                        </div>
+                        <div class="content wrapper">
+                            <div class="title">Titre</div>
+                            <div class="url">URL</div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
         <div class="history">
@@ -82,7 +98,7 @@
             board: {
                 ticket: {},
                 version: {},
-                boardId : 2078254,
+                boardId: 2078254,
             },
             ticket: {
                 inputId: "inputTicketX30",
@@ -272,7 +288,8 @@
                         if (!value) {
                             return;
                         }
-                        const url = `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=Version ${value}`;
+                        const url =
+                            `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=Version ${value}`;
                         openUrl(url);
                     }
                     break;
@@ -283,7 +300,8 @@
                         if (!value) {
                             return;
                         }
-                        const url = `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=${value}`;
+                        const url =
+                        `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=${value}`;
                         openUrl(url);
                     }
                     break;
@@ -413,6 +431,36 @@
 
     .custom-shorcut {
         width: 85%;
+
+        .grid {
+            gap: 10px 10px;
+            margin: 20px;
+
+            .card {
+                border: solid 1px;
+                border-radius: 5px;
+                width: 250px;
+                height: 100px;
+                padding: 5px;
+
+                .header {
+                    justify-content: flex-end;
+                }
+
+                .content {
+                    margin-top: auto;
+
+                    .title {
+                        font-size: larger;
+                        font-weight: bold;
+                    }
+
+                    .url {
+                        color: dimgrey;
+                    }
+                }
+            }
+        }
     }
 
 
