@@ -20,32 +20,22 @@
     </div>
     <div class="bottom">
         <div class="custom-shorcut">
-            <div class="wrapper" id="customShortcut">
-                <div class="input">
-                    <input type="text" placeholder="Nom">
-                    <input type="text" placeholder="URL">
-                    <button>Ajouter</button>
+            <div class="wrapper">
+                <div class="input-part">
+                    <div class="label">Raccourci personnalisé :</div>
+                    <input type="text" id="inputCustomName" placeholder="Nom" onkeydown="onEnter(event, onClickCustom)">
+                    <input type="text" id="inputCustomUrl" placeholder="URL" onkeydown="onEnter(event, onClickCustom)">
+                    <button onclick="onClickCustom()">Ajouter</button>
                 </div>
-                <div class="flex grid">
-                    <div class="card wrapper">
-                        <div class="header">
-                        <div>X</div>
-                        </div>
-                        <div class="content wrapper">
-                            <div class="title">Titre</div>
-                            <div class="url">URL</div>
-                        </div>
+                <div class="flex grid" id="customTarget""></div>
+            </div>
+        </div>
+        <div class=" history">
+                    <div class="head">Historique ticket</div>
+                    <div class="wrapper" id="historyTarget">
                     </div>
-
                 </div>
             </div>
-        </div>
-        <div class="history">
-            <div class="head">Historique ticket</div>
-            <div class="wrapper" id="historyTarget">
-            </div>
-        </div>
-    </div>
 </body>
 
 <script>
@@ -166,9 +156,9 @@
         }
     }
 
-    function onEnter(e, openTicket) {
+    function onEnter(e, callback) {
         if (e.keyCode == 13) {
-            openTicket();
+            callback();
         }
     }
 
@@ -301,7 +291,7 @@
                             return;
                         }
                         const url =
-                        `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=${value}`;
+                            `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=${value}`;
                         openUrl(url);
                     }
                     break;
@@ -354,6 +344,55 @@
 
     const history = getFromStorage("history") || Array(10).fill(null);
     updateHistoryHtml();
+
+    // Custom shorcut
+    const onClickCustom = () => {
+        const inputCustomName = document.getElementById("inputCustomName");
+        const inputCustomUrl = document.getElementById("inputCustomUrl");
+        const name = inputCustomName.value || "";
+        const url = inputCustomUrl.value || "";
+        if (!name && !url) {
+            return;
+        }
+        addCustom(name, url);
+        inputCustomName.value = '';
+        inputCustomUrl.value = '';
+    }
+
+    const addCustom = (name, url) => {
+        custom.push({
+            id: getMaxIdCustom() + 1,
+            name,
+            url: url.startsWith("http") ? url : `http://${url}`
+        })
+        saveInStorage("custom", custom);
+        updateCustomHtml();
+    }
+
+    const removeCustom = (id) => {
+        custom = custom.filter(element => element.id !== id);
+        saveInStorage("custom", custom);
+        updateCustomHtml();
+    }
+
+    const getMaxIdCustom = () => custom.reduce((acc, entry) => acc < entry.id ? entry.id : acc, -1)
+
+    const updateCustomHtml = () => {
+        document.getElementById("customTarget").innerHTML = custom.reduce((acc, entry) => acc + `
+            <div class="card wrapper" onclick="openUrl('${entry.url}')">
+                <div class="header">
+                    <div class="close" onclick="event.stopPropagation();removeCustom(${entry.id})">X</div>
+                </div>
+                <div class="content wrapper">
+                    <div class="title">${entry.name}</div>
+                    <div class="url">${entry.url}</div>
+                </div>
+            </div>
+        `, "");
+    }
+
+    let custom = getFromStorage("custom") || [];
+    updateCustomHtml();
 </script>
 
 <style>
@@ -432,6 +471,13 @@
     .custom-shorcut {
         width: 85%;
 
+        .input-part {
+            .label {
+                margin-right: 15px;
+                font-size: large;
+            }
+        }
+
         .grid {
             gap: 10px 10px;
             margin: 20px;
@@ -442,9 +488,18 @@
                 width: 250px;
                 height: 100px;
                 padding: 5px;
+                cursor: pointer;
 
                 .header {
                     justify-content: flex-end;
+
+                    .close {
+                        transition: 0.1s;
+                    }
+
+                    .close:hover {
+                        transform: scale(1.5);
+                    }
                 }
 
                 .content {
