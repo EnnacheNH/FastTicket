@@ -12,8 +12,8 @@
         <div class="wrapper" id="fastTicketTarget">
             <div class="row separated-y-wrapper">
                 <div class="col separated part board-part">Board</div>
-                <div class="col separated part grafana-part">Grafana</div>
                 <div class="col separated part environment-part">Environnement</div>
+                <div class="col separated part grafana-part">Grafana</div>
             </div>
         </div>
         <button onclick="resetAll()">Reset</button>
@@ -70,17 +70,17 @@
             ticket: {
                 inputId: "inputTicketC30",
             },
-            grafana: {
-                prod: "abjJtwytrbds/logs-v2-prod",
-                preprod: "abjJtwytrbds/logs-v2-preprod",
-                version: "abjJtwytrbds/logs-v2-test?var-service_name=c30-test-backend&var-searchable_pattern=error",
-                dev: "absdjJtwytrbds/logs-v2-dev?var-service_name=c30-test-backend&var-searchable_pattern=error",
-            },
             environment: {
                 prod: "https://c30.cchezvous.fr",
                 preprod: "https://c30.staging.cchezvous.fr",
                 version: "https://c30-test.staging.cchezvous.fr",
                 dev: "https://c30-dev.staging.cchezvous.fr",
+            },
+            grafana: {
+                prod: "abjJtwytrbds/logs-v2-prod",
+                preprod: "abjJtwytrbds/logs-v2-preprod",
+                version: "abjJtwytrbds/logs-v2-test?var-service_name=c30-test-backend&var-searchable_pattern=error",
+                dev: "absdjJtwytrbds/logs-v2-dev?var-service_name=c30-dev-backend&var-searchable_pattern=error",
             },
         },
         X30: {
@@ -93,17 +93,17 @@
             ticket: {
                 inputId: "inputTicketX30",
             },
-            grafana: {
-                prod: "abjJtwbds/logs-v2-prod",
-                preprod: "abjJtwbds/logs-v2-preprod",
-                version: "abjJtwbds/logs-v2-test",
-                dev: "abjJtwbdk/logs-v2-dev",
-            },
             environment: {
                 prod: "https://csuivi.cchezvous.fr",
                 preprod: "https://csuivi.staging.cchezvous.fr",
                 version: "https://csuivi-test.staging.cchezvous.fr",
                 dev: "https://csuivi-dev.staging.cchezvous.fr",
+            },
+            grafana: {
+                prod: "abjJtwbds/logs-v2-prod",
+                preprod: "abjJtwbds/logs-v2-preprod",
+                version: "abjJtwbds/logs-v2-test",
+                dev: "abjJtwbdk/logs-v2-dev",
             },
         },
         FCC: {
@@ -115,17 +115,17 @@
             ticket: {
                 inputId: "inputTicketFCC",
             },
-            grafana: {
-                prod: "KoCKtQxSzAZ/logs-v2-prod",
-                preprod: "KoCKtQxSzAZ/logs-v2-preprod",
-                version: "KoCKtQxSzAZ/logs-v2-test",
-                dev: "KoCKtQxSzAA/logs-v2-dev",
-            },
             environment: {
                 prod: "https://cregle.cchezvous.fr/version",
                 preprod: "https://cregle.staging.cchezvous.fr/version",
                 version: "https://cregle-test.staging.cchezvous.fr/version",
                 dev: "https://cregle-dev.staging.cchezvous.fr/dev",
+            },
+            grafana: {
+                prod: "KoCKtQxSzAZ/logs-v2-prod",
+                preprod: "KoCKtQxSzAZ/logs-v2-preprod",
+                version: "KoCKtQxSzAZ/logs-v2-test",
+                dev: "KoCKtQxSzAA/logs-v2-dev",
             },
         },
         MCC: {
@@ -174,11 +174,11 @@
             <div class="col separated part board-part">
                 ${getHtmlBoard(projectName, props.board)}
             </div>
-            <div class="col separated part grafana-part">
-                ${getHtmlGrafana(props.grafana)}
-            </div>
             <div class="col separated part environment-part">
                 ${getEnvironmentHtml(props.environment)}
+            </div>
+            <div class="col separated part grafana-part">
+                ${getHtmlGrafana(props.grafana)}
             </div>
         </div>
     `;
