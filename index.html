@@ -263,7 +263,7 @@
             <select id="${inputId}">
             ${Object.entries(data).reduce((acc, [key, value]) => acc + `
                 <option value="${value}">${key}</option>
-            `, `<option value="0">${placeholder}</option>`)}
+            `, `<option value="">${placeholder}</option>`)}
             </select>
             <button onclick="${open}()">Go !</button>
         </div>
@@ -301,7 +301,6 @@
                         `dataDict.${projectName}.board.${boardKey}.open`);
                     break;
                 case 'select':
-                    console.log(boardObject);
                     html += getHtmlSelect(boardObject.inputId, boardObject.placeholder,
                         `dataDict.${projectName}.board.${boardKey}.open`, boardObject.data);
                     break;
@@ -369,7 +368,6 @@
             }
         }
 
-
         for (const boardKey in projectObject.board) {
             const boardObject = projectObject.board[boardKey];
             const inputId = 'inputId' + boardKey + projectKey;
@@ -422,6 +420,7 @@
                         const url =
                             `${baseUrl}boards/${projectObject.board.boardId ?? ''}?iteration_id=${value}`;
                         openUrl(url);
+                        updateLastInput(inputId, value);
                     }
                     break;
                 default:
@@ -522,6 +521,21 @@
 
     let custom = getFromStorage("custom") || [];
     updateCustomHtml();
+
+    // Last input values
+    const updateLastInput = (id, value) => {
+        lastInputValues[id] = value;
+        saveInStorage("lastInputValues", lastInputValues);
+    }
+
+    const loadLastInputValues = (lastInputValues) => {
+        Object.entries(lastInputValues).forEach(([key, value]) => {
+            document.getElementById(key).value = value
+        })
+    }
+
+    let lastInputValues = getFromStorage("lastInputValues") || {};
+    loadLastInputValues(lastInputValues);
 </script>
 
 <style>
