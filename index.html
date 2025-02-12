@@ -16,7 +16,6 @@
                 <div class="col separated part grafana-part">Grafana</div>
             </div>
         </div>
-        <button onclick="resetAll()">Reset</button>
     </div>
     <div class="bottom">
         <div class="custom-shorcut">
@@ -64,8 +63,22 @@
         C30: {
             projectName: "ccv-p30",
             board: {
-                ticket: {},
-                version: {}
+                ticket: {
+                    inputType: 'input',
+                },
+                version: {
+                    inputType: 'input',
+                },
+                sprint: {
+                    inputType: 'select',
+                    data: {
+                        'CX 20 Jan - 9 Fev': 2490499,
+                        'CX 10 Fev - 2 Mar': 2490500,
+                        'CX 3 Mar - 23 Mar': 2490501,
+                        'CX 24 Mar - 13 Avr': 2493116,
+                        'CX 14 Avr - 4 Mai': 2507144,
+                    }
+                },
             },
             ticket: {
                 inputId: "inputTicketC30",
@@ -86,8 +99,22 @@
         X30: {
             projectName: "ccv-x30",
             board: {
-                ticket: {},
-                version: {},
+                ticket: {
+                    inputType: 'input',
+                },
+                version: {
+                    inputType: 'input',
+                },
+                sprint: {
+                    inputType: 'select',
+                    data: {
+                        'CX 20 Jan - 9 Fev': 2490499,
+                        'CX 10 Fev - 2 Mar': 2490500,
+                        'CX 3 Mar - 23 Mar': 2490501,
+                        'CX 24 Mar - 13 Avr': 2493116,
+                        'CX 14 Avr - 4 Mai': 2507144,
+                    }
+                },
                 boardId: 2078254,
             },
             ticket: {
@@ -109,8 +136,22 @@
         FCC: {
             projectName: "CCVOutilPrefacturation",
             board: {
-                ticket: {},
-                version: {}
+                ticket: {
+                    inputType: 'input',
+                },
+                version: {
+                    inputType: 'input',
+                },
+                sprint: {
+                    inputType: 'select',
+                    data: {
+                        'FM 20 Jan - 9 Fev': 2490504,
+                        'FM 10 Fev - 2 Mar': 2490505,
+                        'FM 3 Mar - 23 Mar': 2490506,
+                        'FM 24 Mar - 13 Avr': 2493113,
+                        'FM 14 Avr - 4 Mai': 2507141,
+                    }
+                },
             },
             ticket: {
                 inputId: "inputTicketFCC",
@@ -131,8 +172,22 @@
         MCC: {
             projectName: "ccv-mobility-middleware",
             board: {
-                ticket: {},
-                version: {}
+                ticket: {
+                    inputType: 'input',
+                },
+                version: {
+                    inputType: 'input',
+                },
+                sprint: {
+                    inputType: 'select',
+                    data: {
+                        'FM 20 Jan - 9 Fev': 2490504,
+                        'FM 10 Fev - 2 Mar': 2490505,
+                        'FM 3 Mar - 23 Mar': 2490506,
+                        'FM 24 Mar - 13 Avr': 2493113,
+                        'FM 14 Avr - 4 Mai': 2507141,
+                    }
+                },
             },
             ticket: {
                 inputId: "inputTicketMCC",
@@ -147,8 +202,42 @@
         EXPLOIT: {
             projectName: "ccv-exploitation",
             board: {
-                ticket: {},
-                milestone: {}
+                ticket: {
+                    inputType: 'input',
+                },
+                milestone: {
+                    inputType: 'input',
+                },
+            },
+            ticket: {
+                inputId: "inputTicketExploit",
+            },
+        },
+        GLOBAL: {
+            urlOverride: "https://gitlab.com/groups/solutec-cds-dev-projet/ccv/-/",
+            board: {
+                milestone: {
+                    inputType: 'input',
+                },
+                version: {
+                    inputType: 'input',
+                },
+                sprint: {
+                    inputType: 'select',
+                    data: {
+                        'CX 20 Jan - 9 Fev': 2490499,
+                        'CX 10 Fev - 2 Mar': 2490500,
+                        'CX 3 Mar - 23 Mar': 2490501,
+                        'CX 24 Mar - 13 Avr': 2493116,
+                        'CX 14 Avr - 4 Mai': 2507144,
+                        'FM 20 Jan - 9 Fev': 2490504,
+                        'FM 10 Fev - 2 Mar': 2490505,
+                        'FM 3 Mar - 23 Mar': 2490506,
+                        'FM 24 Mar - 13 Avr': 2493113,
+                        'FM 14 Avr - 4 Mai': 2507141,
+                    }
+                },
+                boardId: 9117328,
             },
             ticket: {
                 inputId: "inputTicketExploit",
@@ -169,6 +258,19 @@
         </div>
     `;
 
+    const getHtmlSelect = (inputId, placeholder, open, data) => `
+        <div>
+            <select id="${inputId}">
+            ${Object.entries(data).reduce((acc, [key, value]) => acc + `
+                <option value="${value}">${key}</option>
+            `, `<option value="0">${placeholder}</option>`)}
+            </select>
+            <button onclick="${open}()">Go !</button>
+        </div>
+    `;
+
+
+
     const getHtmlFastTicket = (projectName, props) => `
         <div class="row separated-y-wrapper">
             <div class="col separated part board-part">
@@ -184,17 +286,32 @@
     `;
 
     const getHtmlBoard = (projectName, board) => {
-        let html = `<div class="project">${projectName}</div>`;
+        let html = `
+            <div class="project-name">${projectName}</div>
+            <div class="project-inputs">
+        `;
         for (const boardKey in board) {
             const boardObject = board[boardKey];
             if (typeof boardObject !== "object") {
                 continue;
             }
-            html += getHtmlInput(boardObject.inputId, boardObject.placeholder,
-                `dataDict.${projectName}.board.${boardKey}.open`);
+            switch (boardObject.inputType) {
+                case 'input':
+                    html += getHtmlInput(boardObject.inputId, boardObject.placeholder,
+                        `dataDict.${projectName}.board.${boardKey}.open`);
+                    break;
+                case 'select':
+                    console.log(boardObject);
+                    html += getHtmlSelect(boardObject.inputId, boardObject.placeholder,
+                        `dataDict.${projectName}.board.${boardKey}.open`, boardObject.data);
+                    break;
+                default:
+                    break;
+            }
         }
         return `${html}
-                <div>
+                </div>
+                <div class="project-board-button">
                     <button onclick="dataDict.${projectName}.board.openBoard()">Board</button>
                 </div>
         `;
@@ -237,19 +354,19 @@
     const fastTicketTarget = document.getElementById("fastTicketTarget");
     for (const projectKey in dataDict) {
         const projectObject = dataDict[projectKey];
-        const baseUrl = `https://gitlab.com/solutec-cds-dev-projet/ccv/${projectObject.projectName}/-/`;
+        const baseUrl = projectObject.urlOverride ??
+            `https://gitlab.com/solutec-cds-dev-projet/ccv/${projectObject.projectName}/-/`;
 
-        projectObject.ticket["openTicket"] = () => {
-            const value = document.getElementById(projectObject.ticket.inputId).value;
-            if (!value) {
-                return;
+        if (projectObject.ticket) {
+            projectObject.ticket["openTicket"] = () => {
+                const value = document.getElementById(projectObject.ticket.inputId).value;
+                if (!value) {
+                    return;
+                }
+                const url = `${baseUrl}issues/${value}`;
+                openUrl(url);
+                addHistory(`${projectKey} - ${value}`, url);
             }
-            const url = `${baseUrl}issues/${value}`;
-            openUrl(url);
-            addHistory(`${projectKey} - ${value}`, url);
-        }
-        projectObject.ticket["openBoard"] = () => {
-            openUrl(`${baseUrl}boards`);
         }
 
 
@@ -292,6 +409,18 @@
                         }
                         const url =
                             `${baseUrl}boards/${projectObject.board.boardId ?? ''}?milestone_title=${value}`;
+                        openUrl(url);
+                    }
+                    break;
+                case 'sprint':
+                    boardObject.placeholder = 'Numéro de sprint';
+                    boardObject.open = () => {
+                        const value = document.getElementById(inputId).value;
+                        if (!value) {
+                            return;
+                        }
+                        const url =
+                            `${baseUrl}boards/${projectObject.board.boardId ?? ''}?iteration_id=${value}`;
                         openUrl(url);
                     }
                     break;
@@ -444,7 +573,7 @@
             }
 
             .board-part {
-                width: 600px;
+                width: 800px;
             }
 
             .grafana-part {
@@ -455,9 +584,20 @@
                 width: 300px;
             }
 
-            .project {
+            .project-name {
                 width: 80px;
                 font-weight: bold;
+                margin-right: 30px;
+            }
+
+            .project-inputs {
+                flex: 1;
+                gap: 10px;
+                /* TODO */
+            }
+
+            .project-board-button {
+                width: 50px;
             }
         }
     }
