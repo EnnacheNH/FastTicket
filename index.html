@@ -77,6 +77,9 @@
                         'CX 3 Mar - 23 Mar': 2490501,
                         'CX 24 Mar - 13 Avr': 2493116,
                         'CX 14 Avr - 4 Mai': 2507144,
+                        'CX 5 Mai - 25 Mai': 2524532,
+                        'CX 26 Mai - 15 Jun': 2538876,
+                        'CX 16 Jun - 6 Jul': 2554862,
                     }
                 },
             },
@@ -90,10 +93,10 @@
                 dev: "https://c30-dev.staging.cchezvous.fr",
             },
             grafana: {
-                prod: "abjJtwytrbds/logs-v2-prod",
-                preprod: "abjJtwytrbds/logs-v2-preprod",
-                version: "abjJtwytrbds/logs-v2-test?var-service_name=c30-test-backend&var-searchable_pattern=error",
-                dev: "absdjJtwytrbds/logs-v2-dev?var-service_name=c30-dev-backend&var-searchable_pattern=error",
+                prod: "https://ccv-wcv-grafana-outscale.prod.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%220sx%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22c30-prod-backend%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                preprod: "https://ccv-wcv-grafana-outscale.preprod.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22e9l%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22c30-preprod-backend%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                version: "https://ccv-wcv-grafana-outscale.test.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22rdy%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22c30-test-backend%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                dev: "https://ccv-wcv-grafana-outscale.test.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22rdy%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22c30-dev-backend%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
             },
         },
         X30: {
@@ -113,6 +116,9 @@
                         'CX 3 Mar - 23 Mar': 2490501,
                         'CX 24 Mar - 13 Avr': 2493116,
                         'CX 14 Avr - 4 Mai': 2507144,
+                        'CX 5 Mai - 25 Mai': 2524532,
+                        'CX 26 Mai - 15 Jun': 2538876,
+                        'CX 16 Jun - 6 Jul': 2554862,
                     }
                 },
                 boardId: 2078254,
@@ -127,10 +133,10 @@
                 dev: "https://csuivi-dev.staging.cchezvous.fr",
             },
             grafana: {
-                prod: "abjJtwbds/logs-v2-prod",
-                preprod: "abjJtwbds/logs-v2-preprod",
-                version: "abjJtwbds/logs-v2-test",
-                dev: "abjJtwbdk/logs-v2-dev",
+                prod: "https://ccv-wcv-grafana-outscale.prod.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%220sx%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22x30-prod-backend%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                preprod: "https://ccv-wcv-grafana-outscale.preprod.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22tag%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22x30-preprod-backend%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                version: "https://ccv-wcv-grafana-outscale.test.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22rdy%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22x30-test-backend%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                dev: "https://ccv-wcv-grafana-outscale.test.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22rdy%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22x30-dev-backend%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
             },
         },
         FCC: {
@@ -150,6 +156,9 @@
                         'FM 3 Mar - 23 Mar': 2490506,
                         'FM 24 Mar - 13 Avr': 2493113,
                         'FM 14 Avr - 4 Mai': 2507141,
+                        'FM 5 Mai - 25 Mai': 2524516,
+                        'FM 26 Mai - 15 Jun': 2538885,
+                        'FM 16 Jun - 6 Jul': 2554862,
                     }
                 },
             },
@@ -163,10 +172,10 @@
                 dev: "https://cregle-dev.staging.cchezvous.fr/dev",
             },
             grafana: {
-                prod: "KoCKtQxSzAZ/logs-v2-prod",
-                preprod: "KoCKtQxSzAZ/logs-v2-preprod",
-                version: "KoCKtQxSzAZ/logs-v2-test",
-                dev: "KoCKtQxSzAA/logs-v2-dev",
+                prod: "https://ccv-wcv-grafana-outscale.prod.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22ymr%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22fcc%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                preprod: "https://ccv-wcv-grafana-outscale.preprod.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22jo9%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22fcc%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                version: "https://ccv-wcv-grafana-outscale.test.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22pje%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22fcc%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                dev: "https://ccv-wcv-grafana-outscale.test.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22jaq%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22fcc-dev%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
             },
         },
         MCC: {
@@ -186,6 +195,9 @@
                         'FM 3 Mar - 23 Mar': 2490506,
                         'FM 24 Mar - 13 Avr': 2493113,
                         'FM 14 Avr - 4 Mai': 2507141,
+                        'FM 5 Mai - 25 Mai': 2524516,
+                        'FM 26 Mai - 15 Jun': 2538885,
+                        'FM 16 Jun - 6 Jul': 2554862,
                     }
                 },
             },
@@ -193,10 +205,10 @@
                 inputId: "inputTicketMCC",
             },
             grafana: {
-                prod: "KoCKtQxSzAB/logs-v2-prod",
-                preprod: "KoCKtQxSzAB/logs-v2-preprod",
-                version: "KsoCKtQxSzA/logs-v2-test",
-                dev: "KoCKtQxSzA/logs-v2-dev",
+                prod: "https://ccv-wcv-grafana-outscale.prod.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22ymr%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22mcc%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                preprod: "https://ccv-wcv-grafana-outscale.preprod.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22jo9%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22mcc%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                version: "https://ccv-wcv-grafana-outscale.test.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22pje%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22mcc%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
+                dev: "https://ccv-wcv-grafana-outscale.test.internal.dpdgroup.com/explore?schemaVersion=1&panes=%7B%22jaq%22:%7B%22datasource%22:%22P8E80F9AEF21F6940%22,%22queries%22:%5B%7B%22refId%22:%22A%22,%22expr%22:%22%7Bservice_name%3D%5C%22mcc-dev%5C%22%7D%20%7C%3D%20%60%60%22,%22queryType%22:%22range%22,%22datasource%22:%7B%22type%22:%22loki%22,%22uid%22:%22P8E80F9AEF21F6940%22%7D,%22editorMode%22:%22builder%22%7D%5D,%22range%22:%7B%22from%22:%22now-1h%22,%22to%22:%22now%22%7D%7D%7D&orgId=1",
             },
         },
         EXPLOIT: {
@@ -230,11 +242,17 @@
                         'CX 3 Mar - 23 Mar': 2490501,
                         'CX 24 Mar - 13 Avr': 2493116,
                         'CX 14 Avr - 4 Mai': 2507144,
+                        'CX 5 Mai - 25 Mai': 2524532,
+                        'CX 26 Mai - 15 Jun': 2538876,
+                        'CX 16 Jun - 6 Jul': 2554862,
                         'FM 20 Jan - 9 Fev': 2490504,
                         'FM 10 Fev - 2 Mar': 2490505,
                         'FM 3 Mar - 23 Mar': 2490506,
                         'FM 24 Mar - 13 Avr': 2493113,
                         'FM 14 Avr - 4 Mai': 2507141,
+                        'FM 5 Mai - 25 Mai': 2524516,
+                        'FM 26 Mai - 15 Jun': 2538885,
+                        'FM 16 Jun - 6 Jul': 2554862,
                     }
                 },
                 boardId: 9117328,
@@ -321,9 +339,7 @@
         for (const env in grafana) {
             html += `
                 <div class="col">
-                    <button onclick="openUrl('https://ccv-wcv-grafana-outscale.${
-                        env === 'version' || env === 'dev' ? 'test' : env
-                    }.internal.dpdgroup.com/d/${grafana[env]}')">${env.toUpperCase()}</button>
+                    <button onclick="openUrl('${grafana[env]}')">${env.toUpperCase()}</button>
                 </div>
             `;
         }
